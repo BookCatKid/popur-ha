@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/BookCatKid/popur-s7-ha/main/logo-dark.svg" alt="Popur" width="96" height="96">
+  <img src="https://raw.githubusercontent.com/BookCatKid/popur-s7-ha/main/banner.png" alt="Popur" width="480">
 </p>
 
 <h1 align="center">Popur S7</h1>
