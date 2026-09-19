@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/BookCatKid/pypopur/main/logo.svg" alt="Popur" width="96" height="96">
+  <img src="https://raw.githubusercontent.com/BookCatKid/popur-ha/main/logo-dark.svg" alt="Popur" width="96" height="96">
 </p>
 
 <h1 align="center">Popur</h1>
@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/BookCatKid/pypopur"><img src="https://img.shields.io/badge/GitHub-BookCatKid%2Fpypopur-blue" alt="GitHub"></a>
+  <a href="https://github.com/BookCatKid/popur-ha"><img src="https://img.shields.io/badge/GitHub-BookCatKid%2Fpopur--ha-blue" alt="GitHub"></a>
   <a href="https://pypi.org/project/pypopur/"><img src="https://img.shields.io/pypi/v/pypopur" alt="PyPI"></a>
-  <a href="https://github.com/BookCatKid/pypopur/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://github.com/BookCatKid/popur-ha/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
 </p>
 
 Controls the Popur S7 via LAN (preferred) and cloud (fallback/settings/pets). Built on [`pypopur`](https://github.com/BookCatKid/pypopur).
@@ -27,7 +27,7 @@ Controls the Popur S7 via LAN (preferred) and cloud (fallback/settings/pets). Bu
 
 ## Install via HACS
 
-1. Add `https://github.com/BookCatKid/pypopur` as a **custom repository** in HACS (type: Integration)
+1. Add `https://github.com/BookCatKid/popur-ha` as a **custom repository** in HACS (type: Integration)
 2. Install "Popur"
 3. Restart Home Assistant
 4. **Settings → Devices & Services → Add Integration → Popur**
@@ -111,4 +111,4 @@ When a cat leaves the litter box (`cat_left` event via MQTT), the integration fe
 
 ## License
 
-MIT — same as [pypopur](https://github.com/BookCatKid/pypopur/blob/main/LICENSE).
+MIT — same as [pypopur](https://github.com/BookCatKid/popur-ha/blob/main/LICENSE).
