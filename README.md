@@ -1,8 +1,10 @@
 <p align="center">
-  <img src="logo.svg" alt="Popur" width="128" height="128">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="logo.svg">
+    <source media="(prefers-color-scheme: light)" srcset="logo-dark.svg">
+    <img src="logo-dark.svg" alt="Popur" height="48">
+  </picture>
 </p>
-
-<h1 align="center">Popur</h1>
 
 <p align="center">
   <strong>Experimental</strong> — local-first Home Assistant integration for the Popur S7 smart litter box.
