@@ -172,7 +172,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: PopurConfigEntry) -> boo
         try:
             modules = await account.firmware_info(device.device_id, home_id=home_id)
             coordinator.firmware_versions[device.device_id] = ", ".join(
-                m.current_version for m in modules if m.current_version
+                f"{m.type_desc} {m.current_version}" if m.type_desc else m.current_version
+                for m in modules
+                if m.current_version
             ) or None
         except Exception:
             _LOGGER.debug(
