@@ -7,8 +7,8 @@
         "data": {
           "email": "Email",
           "password": "Password",
-          "host": "Device IP (optional)",
-          "install_id": "Install ID (optional)"
+          "host": "Device IP",
+          "install_id": "Install ID"
         }
       }
     },
