@@ -3,7 +3,7 @@
 from datetime import timedelta
 from typing import Final
 
-DOMAIN: Final = "popur"
+DOMAIN: Final = "popur_s7"
 
 CONF_INSTALL_ID: Final = "install_id"
 CONF_SCAN_INTERVAL: Final = "scan_interval"

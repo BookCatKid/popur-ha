@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/BookCatKid/popur-ha"><img src="https://img.shields.io/badge/GitHub-BookCatKid%2Fpopur--ha-blue" alt="GitHub"></a>
+  <a href="https://github.com/BookCatKid/popur-s7-ha"><img src="https://img.shields.io/badge/GitHub-BookCatKid%2Fpopur--s7--ha-blue" alt="GitHub"></a>
   <a href="https://pypi.org/project/pypopur/"><img src="https://img.shields.io/pypi/v/pypopur" alt="PyPI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Custom-orange.svg" alt="HACS"></a>
@@ -30,10 +30,10 @@ Controls the Popur S7 via LAN (preferred) and cloud (fallback/settings/pets). Bu
 
 ## Install via HACS
 
-1. Add `https://github.com/BookCatKid/popur-ha` as a **custom repository** in HACS (type: **Integration**)
-2. Install "Popur"
+1. Add `https://github.com/BookCatKid/popur-s7-ha` as a **custom repository** in HACS (type: **Integration**)
+2. Install "Popur S7"
 3. Restart Home Assistant
-4. **Settings → Devices & Services → Add Integration → Popur**
+4. **Settings → Devices & Services → Add Integration → Popur S7**
 
 ## Install manually
 
