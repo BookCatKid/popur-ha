@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="48" fill="url(#bg)"/>
+  <!-- Litter box body -->
+  <rect x="52" y="120" width="152" height="80" rx="12" fill="#e8e8e8" stroke="#ccc" stroke-width="2"/>
+  <!-- Lid -->
+  <path d="M52 120 L52 96 Q52 76 72 76 L184 76 Q204 76 204 96 L204 120" fill="#f0f0f0" stroke="#ccc" stroke-width="2"/>
+  <!-- Lid handle -->
+  <rect x="112" y="68" width="32" height="10" rx="5" fill="#bbb"/>
+  <!-- Cat silhouette inside -->
+  <ellipse cx="128" cy="160" rx="36" ry="24" fill="#1a1a2e"/>
+  <!-- Cat head -->
+  <circle cx="128" cy="148" r="16" fill="#1a1a2e"/>
+  <!-- Ears -->
+  <path d="M114 138 L110 124 L122 134" fill="#1a1a2e"/>
+  <path d="M142 138 L146 124 L134 134" fill="#1a1a2e"/>
+  <!-- Tail -->
+  <path d="M164 160 Q190 150 188 130" fill="none" stroke="#1a1a2e" stroke-width="8" stroke-linecap="round"/>
+  <!-- Eyes -->
+  <circle cx="122" cy="146" r="3" fill="#e8e8e8"/>
+  <circle cx="134" cy="146" r="3" fill="#e8e8e8"/>
+</svg>
