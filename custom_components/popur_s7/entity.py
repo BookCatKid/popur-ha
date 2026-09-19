@@ -66,6 +66,7 @@ class PopurPetEntity(CoordinatorEntity[PopurCoordinator]):
         coordinator: PopurCoordinator,
         device: AccountDevice,
         pet_id: int,
+        via_device_id: str | None = None,
     ) -> None:
         super().__init__(coordinator)
         self.device = device
@@ -74,5 +75,6 @@ class PopurPetEntity(CoordinatorEntity[PopurCoordinator]):
             identifiers={(DOMAIN, f"pet_{pet_id}")},
             name="Pet",
             manufacturer="Popur",
-            via_device=(DOMAIN, device.device_id),
         )
+        if via_device_id:
+            self._attr_device_info["via_device_id"] = via_device_id

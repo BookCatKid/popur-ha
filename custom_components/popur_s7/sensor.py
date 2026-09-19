@@ -15,6 +15,7 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.const import EntityCategory, UnitOfMass, UnitOfTime
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from pypopur.models import (
@@ -26,6 +27,7 @@ from pypopur.models import (
 )
 
 from . import PopurConfigEntry
+from .const import DOMAIN
 from .entity import PopurEntity, PopurPetEntity
 
 
@@ -229,13 +231,27 @@ async def async_setup_entry(
             PopurInfoSensor(coordinator, client, device, desc)
             for desc in INFO_SENSORS
         )
-        if coordinator.data:
+    async_add_entities(entities)
+
+    # Pet devices link to the litter box by registry id, which only exists
+    # once a device-level entity has registered it — so pets go in second.
+    if coordinator.data and coordinator.data.pets:
+        dev_reg = dr.async_get(hass)
+        pet_entities: list[SensorEntity] = []
+        for dev_id in data.clients:
+            device = next(
+                d for d in data.account_devices if d.device_id == dev_id
+            )
+            parent = dev_reg.async_get_device_by_identifier(
+                (DOMAIN, dev_id), entry.entry_id
+            )
+            via_id = parent.id if parent is not None else None
             for pet_id in coordinator.data.pets:
-                entities.extend(
-                    PopurPetSensor(coordinator, device, pet_id, desc)
+                pet_entities.extend(
+                    PopurPetSensor(coordinator, device, pet_id, desc, via_id)
                     for desc in PET_SENSORS
                 )
-    async_add_entities(entities)
+        async_add_entities(pet_entities)
 
 
 class PopurDeviceSensor(PopurEntity, SensorEntity):
@@ -327,8 +343,8 @@ PET_SENSORS: tuple[SensorEntityDescription, ...] = (
 class PopurPetSensor(PopurPetEntity, SensorEntity):
     """A sensor reading the latest decoded visit for one pet."""
 
-    def __init__(self, coordinator, device, pet_id, description) -> None:
-        super().__init__(coordinator, device, pet_id)
+    def __init__(self, coordinator, device, pet_id, description, via_device_id=None) -> None:
+        super().__init__(coordinator, device, pet_id, via_device_id)
         self.entity_description = description
         self._attr_unique_id = f"pet_{pet_id}_{description.key}"
         if coordinator.data is not None:
