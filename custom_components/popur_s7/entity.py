@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.helpers.device_registry import (
+    CONNECTION_NETWORK_MAC,
+    DeviceInfo,
+    format_mac,
+)
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
@@ -32,10 +36,17 @@ class PopurEntity(CoordinatorEntity[PopurCoordinator]):
         self.device = device
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device.device_id)},
+            connections=(
+                {(CONNECTION_NETWORK_MAC, format_mac(device.mac))}
+                if device.mac
+                else set()
+            ),
             name=device.name or "Popur S7",
             manufacturer="Popur",
             model="Popur S7 SLS",
+            model_id=device.product_id,
             serial_number=device.device_id,
+            sw_version=coordinator.firmware_versions.get(device.device_id),
         )
 
     @property

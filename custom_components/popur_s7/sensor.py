@@ -37,6 +37,33 @@ class PopurSensorDescription(SensorEntityDescription):
     attrs_fn: Callable[[DeviceSnapshot], dict[str, Any]] | None = None
 
 
+@dataclass(frozen=True, kw_only=True)
+class PopurInfoSensorDescription(SensorEntityDescription):
+    """Diagnostic sensor reading coordinator/client metadata."""
+
+    value_fn: Callable[[Any, Any], Any]
+
+
+def _lan_ip(client) -> str | None:
+    transport = getattr(client, "transport", None)
+    config = getattr(getattr(transport, "primary", None), "_config", None)
+    return getattr(config, "host", None)
+
+
+INFO_SENSORS: tuple[PopurInfoSensorDescription, ...] = (
+    PopurInfoSensorDescription(
+        key="install_id",
+        translation_key="install_id",
+        value_fn=lambda coordinator, client: coordinator.install_id,
+    ),
+    PopurInfoSensorDescription(
+        key="lan_ip",
+        translation_key="lan_ip",
+        value_fn=lambda coordinator, client: _lan_ip(client),
+    ),
+)
+
+
 DEVICE_SENSORS: tuple[PopurSensorDescription, ...] = (
     PopurSensorDescription(
         key="machine_status",
@@ -198,6 +225,10 @@ async def async_setup_entry(
             for desc in DEVICE_SENSORS
         )
         entities.append(PopurConnectionSensor(coordinator, client, device))
+        entities.extend(
+            PopurInfoSensor(coordinator, client, device, desc)
+            for desc in INFO_SENSORS
+        )
         if coordinator.data:
             for pet_id in coordinator.data.pets:
                 entities.extend(
@@ -229,6 +260,22 @@ class PopurDeviceSensor(PopurEntity, SensorEntity):
         if self.entity_description.attrs_fn is None or self.snapshot is None:
             return None
         return self.entity_description.attrs_fn(self.snapshot)
+
+
+class PopurInfoSensor(PopurEntity, SensorEntity):
+    """Diagnostic sensor reading coordinator/client metadata."""
+
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    entity_description: PopurInfoSensorDescription
+
+    def __init__(self, coordinator, client, device, description) -> None:
+        super().__init__(coordinator, client, device)
+        self.entity_description = description
+        self._attr_unique_id = f"{device.device_id}_{description.key}"
+
+    @property
+    def native_value(self) -> Any:
+        return self.entity_description.value_fn(self.coordinator, self.client)
 
 
 class PopurConnectionSensor(PopurEntity, SensorEntity):

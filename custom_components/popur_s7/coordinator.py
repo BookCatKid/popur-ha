@@ -78,6 +78,9 @@ class PopurCoordinator(DataUpdateCoordinator[PopurRuntimeData]):
         self.clients = clients
         self.events = events
         self._devices = devices or {}
+        # Static metadata populated during setup for entity/device-info use.
+        self.install_id: str = ""
+        self.firmware_versions: dict[str, str | None] = {}
         self._shadow_dps: dict[str, dict[int, Any]] = {}
         self._next_cloud_refresh = 0.0
         self._record_fetch_task: asyncio.TimerHandle | None = None

@@ -43,6 +43,8 @@
       "fault_free_time": { "name": "Fault-free time" },
       "self_check": { "name": "Self-check progress" },
       "connection": { "name": "Connection" },
+      "install_id": { "name": "Install ID" },
+      "lan_ip": { "name": "LAN IP" },
       "pet_last_weight": { "name": "Last measured weight" },
       "pet_last_visit_duration": { "name": "Last visit duration" },
       "pet_last_visit": { "name": "Last visit" }

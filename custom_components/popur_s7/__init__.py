@@ -166,6 +166,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: PopurConfigEntry) -> boo
     )
     await coordinator.async_config_entry_first_refresh()
 
+    # Static device metadata for the registry + diagnostic sensors.
+    coordinator.install_id = entry.data.get(CONF_INSTALL_ID, "")
+    for device in devices:
+        try:
+            modules = await account.firmware_info(device.device_id, home_id=home_id)
+            coordinator.firmware_versions[device.device_id] = ", ".join(
+                m.current_version for m in modules if m.current_version
+            ) or None
+        except Exception:
+            _LOGGER.debug(
+                "firmware info failed for %s", device.device_id, exc_info=True
+            )
+
     entry_data = PopurEntryData(
         account=account,
         home_id=home_id,
