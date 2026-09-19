@@ -7,9 +7,8 @@
         "data": {
           "email": "Email",
           "password": "Password",
-          "host": "Device LAN IP (optional — auto-discovered if blank)",
-          "install_id": "Install ID (optional)",
-          "scan_interval": "Poll interval (seconds)"
+          "host": "Device IP (optional)",
+          "install_id": "Install ID (optional)"
         }
       }
     },

@@ -6,11 +6,11 @@ from typing import Final
 DOMAIN: Final = "popur_s7"
 
 CONF_INSTALL_ID: Final = "install_id"
-CONF_SCAN_INTERVAL: Final = "scan_interval"
 CONF_HOST: Final = "host"
 
-DEFAULT_SCAN_INTERVAL: Final = timedelta(seconds=60)
-MIN_SCAN_INTERVAL: Final = timedelta(seconds=15)
+# Live device state refresh over the local channel; MQTT pushes cover
+# real-time changes, this catches anything that is never pushed.
+LOCAL_REFRESH_INTERVAL: Final = timedelta(seconds=60)
 
 # Cloud-side data (settings-DP shadow, pets, usage records) refreshes on a
 # slower cadence — the LAN channel covers live device state between these.

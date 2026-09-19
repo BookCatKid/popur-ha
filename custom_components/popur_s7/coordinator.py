@@ -51,7 +51,7 @@ class PopurRuntimeData:
 class PopurCoordinator(DataUpdateCoordinator[PopurRuntimeData]):
     """Polls device snapshots (LAN-first) + household pet data (cloud).
 
-    Live device state refreshes every ``scan_interval`` over the local
+    Live device state refreshes every ``refresh_interval`` over the local
     channel; the cloud is only touched on the slow cadence for the DP
     shadow (settings DPs the LAN omits) and pet/record data, or when the
     local channel is down.
@@ -63,7 +63,7 @@ class PopurCoordinator(DataUpdateCoordinator[PopurRuntimeData]):
         account: PopurAccount,
         home_id: int | str,
         clients: dict[str, PopurClient],
-        scan_interval,
+        refresh_interval,
         events: Any = None,
         devices: dict[str, Any] | None = None,
     ) -> None:
@@ -71,7 +71,7 @@ class PopurCoordinator(DataUpdateCoordinator[PopurRuntimeData]):
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=scan_interval,
+            update_interval=refresh_interval,
         )
         self.account = account
         self.home_id = home_id

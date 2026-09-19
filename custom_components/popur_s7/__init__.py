@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from datetime import timedelta
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
@@ -26,7 +25,7 @@ from pypopur.mobile import (
 )
 from pypopur.transport import FallbackTransport, PopurTransport
 
-from .const import CONF_HOST, CONF_INSTALL_ID, CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL, DOMAIN
+from .const import CONF_HOST, CONF_INSTALL_ID, DOMAIN, LOCAL_REFRESH_INTERVAL
 from .coordinator import PopurCoordinator
 from .transport import CloudHttpTransport
 
@@ -157,15 +156,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: PopurConfigEntry) -> boo
         )
         clients[device.device_id] = PopurClient(transport)
 
-    scan_seconds = entry.data.get(
-        CONF_SCAN_INTERVAL, int(DEFAULT_SCAN_INTERVAL.total_seconds())
-    )
     coordinator = PopurCoordinator(
         hass,
         account,
         home_id,
         clients,
-        timedelta(seconds=scan_seconds),
+        LOCAL_REFRESH_INTERVAL,
         devices={d.device_id: d for d in devices},
     )
     await coordinator.async_config_entry_first_refresh()
