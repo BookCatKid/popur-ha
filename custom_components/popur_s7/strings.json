@@ -13,12 +13,14 @@
         }
       }
     },
+    "flow_title": "Popur S7",
     "error": {
       "cannot_connect": "Failed to connect",
       "invalid_auth": "Invalid authentication"
     },
     "abort": {
-      "already_configured": "Account is already configured"
+      "already_configured": "Device is already configured",
+      "not_popur_device": "Device is not a Popur litter box"
     }
   },
   "entity": {

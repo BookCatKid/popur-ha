@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import uuid
 from typing import Any
 
 import voluptuous as vol
+from homeassistant.helpers.service_info.dhcp import DhcpServiceInfo
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_EMAIL, CONF_PASSWORD
 from homeassistant.helpers import config_validation as cv
@@ -47,6 +49,32 @@ class PopurConfigFlow(ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
+    def __init__(self) -> None:
+        self._discovered_host: str = ""
+
+    async def async_step_dhcp(
+        self, discovery_info: DhcpServiceInfo
+    ) -> ConfigFlowResult:
+        """Handle a device matching the S7 MAC OUI appearing on DHCP."""
+        # The OUI is not guaranteed Popur-exclusive, so confirm the Tuya LAN
+        # port answers before surfacing the device as discovered.
+        try:
+            async with asyncio.timeout(2):
+                reader, writer = await asyncio.open_connection(
+                    discovery_info.ip, 6668
+                )
+                writer.close()
+                await writer.wait_closed()
+        except (OSError, TimeoutError):
+            return self.async_abort(reason="not_popur_device")
+
+        self._discovered_host = discovery_info.ip
+        await self.async_set_unique_id(discovery_info.macaddress)
+        self._abort_if_unique_id_configured()
+        if self._async_current_entries():
+            return self.async_abort(reason="already_configured")
+        return await self.async_step_user()
+
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
@@ -82,5 +110,9 @@ class PopurConfigFlow(ConfigFlow, domain=DOMAIN):
                 )
 
         return self.async_show_form(
-            step_id="user", data_schema=STEP_USER_SCHEMA, errors=errors
+            step_id="user",
+            data_schema=self.add_suggested_values_to_schema(
+                STEP_USER_SCHEMA, {CONF_HOST: self._discovered_host}
+            ),
+            errors=errors,
         )

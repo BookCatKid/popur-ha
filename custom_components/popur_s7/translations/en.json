@@ -7,17 +7,20 @@
         "data": {
           "email": "Email",
           "password": "Password",
+          "host": "Device LAN IP (optional — auto-discovered if blank)",
           "install_id": "Install ID (optional)",
           "scan_interval": "Poll interval (seconds)"
         }
       }
     },
+    "flow_title": "Popur S7",
     "error": {
       "cannot_connect": "Failed to connect",
       "invalid_auth": "Invalid authentication"
     },
     "abort": {
-      "already_configured": "Account is already configured"
+      "already_configured": "Device is already configured",
+      "not_popur_device": "Device is not a Popur litter box"
     }
   },
   "entity": {

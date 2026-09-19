@@ -5,6 +5,11 @@
     "@BookCatKid"
   ],
   "config_flow": true,
+  "dhcp": [
+    {
+      "macaddress": "00337A*"
+    }
+  ],
   "documentation": "https://github.com/BookCatKid/popur-s7-ha",
   "integration_type": "hub",
   "iot_class": "local_polling",
@@ -15,5 +20,5 @@
   "requirements": [
     "pypopur==0.1.1"
   ],
-  "version": "0.1.1"
+  "version": "0.2.0"
 }
